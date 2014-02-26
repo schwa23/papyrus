@@ -26,6 +26,7 @@
                     <gestureRecognizers/>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="61f-vz-hJM" appends="YES" id="Txn-o0-MBz"/>
+                        <outletCollection property="gestureRecognizers" destination="km2-cA-CYq" appends="YES" id="MS0-Wp-5yW"/>
                     </connections>
                 </imageView>
             </subviews>
@@ -38,6 +39,11 @@
                 <action selector="foregroundDidPan:" destination="-1" id="j7v-A2-yAn"/>
             </connections>
         </panGestureRecognizer>
+        <tapGestureRecognizer id="km2-cA-CYq">
+            <connections>
+                <action selector="handleForegroundTap:" destination="-1" id="stb-EJ-Tuc"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="papyrus_bg" width="640" height="1136"/>

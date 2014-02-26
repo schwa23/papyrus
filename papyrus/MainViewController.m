@@ -20,8 +20,12 @@
 @property (nonatomic, strong) UISnapBehavior *snapBehavior;
 @property (nonatomic, strong) UIDynamicItemBehavior *foregroundDynamicBehavior;
 @property (nonatomic, strong) UIAttachmentBehavior *attachmentBehavior;
+@property (nonatomic, strong) UIGravityBehavior *gravityBehavior;
+@property (nonatomic, strong) UIPushBehavior *pushBehavior;
 
 - (IBAction)foregroundDidPan:(UIPanGestureRecognizer *)sender;
+
+- (IBAction)handleForegroundTap:(UITapGestureRecognizer *)sender;
 
 -(void)snapToBoundaries;
 
@@ -44,11 +48,7 @@
     self.isForegroundHidden = NO;
     self.initialYposition = 0;
     self.releaseVelocity = 0;
-    
-    
-    
-    
-    
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -57,24 +57,26 @@
     UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     self.animator = animator;
     
-    UIDynamicItemBehavior *foregroundDynamicBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.foregroundView]];
+    UICollisionBehavior *collisionBehaviour = [[UICollisionBehavior alloc] initWithItems:@[self.foregroundView]];
+    [collisionBehaviour setTranslatesReferenceBoundsIntoBoundaryWithInsets:UIEdgeInsetsMake(0, 0, -528, 0)];
+    [self.animator addBehavior:collisionBehaviour];
     
-    foregroundDynamicBehavior.allowsRotation = NO;
-    self.foregroundDynamicBehavior = foregroundDynamicBehavior;
-    [animator addBehavior:foregroundDynamicBehavior];
+    self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.foregroundView]];
+    self.gravityBehavior.gravityDirection = CGVectorMake(0.0f, -1.0f);
+    self.gravityBehavior.magnitude = .1f;
     
-    CGPoint fgCenterPoint = CGPointMake(self.foregroundView.center.x, self.foregroundView.center.y);
-    UIOffset attachmentPoint = UIOffsetMake(0, 0);
+    [self.animator addBehavior:self.gravityBehavior];
     
-    UIAttachmentBehavior *attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.foregroundView offsetFromCenter:attachmentPoint attachedToAnchor:fgCenterPoint];
+    self.pushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.foregroundView] mode:UIPushBehaviorModeInstantaneous];
+    self.pushBehavior.magnitude = 0.0f;
+    self.pushBehavior.angle = 0.0f;
+    [self.animator addBehavior:self.pushBehavior];
     
-    attachmentBehavior.damping = .5;
-    attachmentBehavior.frequency = 1;
-    attachmentBehavior.length = 2;
-    [animator addBehavior:attachmentBehavior];
-    
-    self.attachmentBehavior = attachmentBehavior;
-    
+    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.foregroundView]];
+    itemBehavior.elasticity = .01f;
+//    itemBehavior.resistance = 2.0f;
+    itemBehavior.density = 1.0f;
+    [self.animator addBehavior:itemBehavior];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,19 +86,23 @@
 }
 
 - (IBAction)foregroundDidPan:(UIPanGestureRecognizer *)sender {
-    [self.animator addBehavior:self.attachmentBehavior];
-    [self.animator removeBehavior:self.snapBehavior];
+        CGPoint location = [sender locationInView:self.view];
+        location.x = self.foregroundView.center.x;
 
     
     if (sender.state == UIGestureRecognizerStateBegan) {
-        self.initialYposition = self.foregroundView.center.y;
+        //remove the gravity (since our finger is the new force affeting this
+        [self.animator removeBehavior:self.gravityBehavior];
+        
+        
+        //anchor to the view's current x center & the fingter's y position
+        self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.foregroundView attachedToAnchor:location];
+        [self.animator addBehavior:self.attachmentBehavior];
         
     } else if (sender.state == UIGestureRecognizerStateChanged) {
-        CGPoint newCenter = self.foregroundView.center;
-        newCenter.x = 160;
-        newCenter.y = self.initialYposition + [sender translationInView:self.view].y;
-        
-        [self.attachmentBehavior setAnchorPoint:newCenter];
+        //and then move it around
+        [self.attachmentBehavior setAnchorPoint:location];
+        NSLog(@"Location : %f", location.y);
         
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"Release velocity: %f ", self.releaseVelocity);
@@ -108,33 +114,41 @@
 
 }
 
+- (IBAction)handleForegroundTap:(UITapGestureRecognizer *)sender {
+    if(self.isForegroundHidden){
+        self.releaseVelocity = -5200.f;
+//        self.pushBehavior.magnitude = 100;
+        [self snapToBoundaries];
+        [self.animator addBehavior:self.gravityBehavior];
+    
+    }
+}
+
 - (void) snapToBoundaries {
     
-    
-    CGPoint newOrigin = CGPointMake(160,284);
+    [self.animator removeBehavior:self.attachmentBehavior];
+    self.attachmentBehavior = nil;
+
     NSLog(@"- -- snap release %f", self.releaseVelocity);
-    if (self.releaseVelocity > 0) {
+    if (self.releaseVelocity > 0 ) {
         //dragging UP
         
-        newOrigin.y = 808;
+        self.gravityBehavior.gravityDirection = CGVectorMake(0.0f, 1.0f);
         self.isForegroundHidden = YES;
         
     } else {
+        
+        self.gravityBehavior.gravityDirection = CGVectorMake(0.0f, -1.0f);
         self.isForegroundHidden = NO;
 
     }
     
     
-    UISnapBehavior *snapBehavior = [[UISnapBehavior alloc] initWithItem:self.foregroundView snapToPoint:newOrigin];
-    snapBehavior.damping = .9;
-    //    [self.animator addBehavior:self.foregroundDynamicBehavior];
-
-//    [self.animator removeBehavior:self.attachmentBehavior];
-    [self.animator addBehavior:snapBehavior];
-
+//  add back in the gravity
+    [self.animator addBehavior:self.gravityBehavior];
     
-    self.snapBehavior = snapBehavior;
-    
-    
+    self.pushBehavior.pushDirection = CGVectorMake( 0, self.releaseVelocity / 10.0f);
+    self.pushBehavior.magnitude = abs(self.releaseVelocity) / 10.0f;
+    self.pushBehavior.active = YES;
 }
 @end
