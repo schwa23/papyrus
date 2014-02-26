@@ -19,6 +19,8 @@
 		331154E018BDC33500828136 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331154C818BDC33500828136 /* UIKit.framework */; };
 		331154E818BDC33500828136 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 331154E618BDC33500828136 /* InfoPlist.strings */; };
 		331154EA18BDC33500828136 /* papyrusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 331154E918BDC33500828136 /* papyrusTests.m */; };
+		331154F618BDC4B700828136 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331154F418BDC4B700828136 /* MainViewController.m */; };
+		331154F718BDC4B700828136 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 331154F518BDC4B700828136 /* MainViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,9 @@
 		331154E518BDC33500828136 /* papyrusTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "papyrusTests-Info.plist"; sourceTree = "<group>"; };
 		331154E718BDC33500828136 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		331154E918BDC33500828136 /* papyrusTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = papyrusTests.m; sourceTree = "<group>"; };
+		331154F318BDC4B600828136 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		331154F418BDC4B700828136 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		331154F518BDC4B700828136 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +116,9 @@
 				331154D418BDC33500828136 /* AppDelegate.m */,
 				331154D618BDC33500828136 /* Images.xcassets */,
 				331154CB18BDC33500828136 /* Supporting Files */,
+				331154F318BDC4B600828136 /* MainViewController.h */,
+				331154F418BDC4B700828136 /* MainViewController.m */,
+				331154F518BDC4B700828136 /* MainViewController.xib */,
 			);
 			path = papyrus;
 			sourceTree = "<group>";
@@ -220,6 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				331154CF18BDC33500828136 /* InfoPlist.strings in Resources */,
+				331154F718BDC4B700828136 /* MainViewController.xib in Resources */,
 				331154D718BDC33500828136 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				331154D518BDC33500828136 /* AppDelegate.m in Sources */,
+				331154F618BDC4B700828136 /* MainViewController.m in Sources */,
 				331154D118BDC33500828136 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
