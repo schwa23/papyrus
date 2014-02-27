@@ -15,6 +15,7 @@
 @property (nonatomic) CGFloat initialYposition;
 @property (nonatomic) CGFloat releaseVelocity;
 @property (nonatomic) BOOL isForegroundHidden;
+@property (nonatomic) CGFloat distanceTraveled;
 
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UISnapBehavior *snapBehavior;
@@ -48,6 +49,7 @@
     self.isForegroundHidden = NO;
     self.initialYposition = 0;
     self.releaseVelocity = 0;
+    self.distanceTraveled = 0;
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -58,7 +60,7 @@
     self.animator = animator;
     
     UICollisionBehavior *collisionBehaviour = [[UICollisionBehavior alloc] initWithItems:@[self.foregroundView]];
-    [collisionBehaviour setTranslatesReferenceBoundsIntoBoundaryWithInsets:UIEdgeInsetsMake(0, 0, -528, 0)];
+    [collisionBehaviour setTranslatesReferenceBoundsIntoBoundaryWithInsets:UIEdgeInsetsMake(0, 0, -522, 0)];
     [self.animator addBehavior:collisionBehaviour];
     
     self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.foregroundView]];
@@ -72,11 +74,11 @@
     self.pushBehavior.angle = 0.0f;
     [self.animator addBehavior:self.pushBehavior];
     
-    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.foregroundView]];
-    itemBehavior.elasticity = .01f;
-//    itemBehavior.resistance = 2.0f;
-    itemBehavior.density = 1.0f;
-    [self.animator addBehavior:itemBehavior];
+    self.foregroundDynamicBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.foregroundView]];
+    self.foregroundDynamicBehavior.elasticity = .01f;
+    self.foregroundDynamicBehavior.resistance = 2.0f;
+//    self.foregroundDynamicBehavior.density = 1.0f;
+    [self.animator addBehavior:self.foregroundDynamicBehavior];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,7 +95,7 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         //remove the gravity (since our finger is the new force affeting this
         [self.animator removeBehavior:self.gravityBehavior];
-        
+        self.initialYposition = location.y;
         
         //anchor to the view's current x center & the fingter's y position
         self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.foregroundView attachedToAnchor:location];
@@ -103,6 +105,7 @@
         //and then move it around
         [self.attachmentBehavior setAnchorPoint:location];
         NSLog(@"Location : %f", location.y);
+        self.distanceTraveled = location.y - self.initialYposition;
         
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"Release velocity: %f ", self.releaseVelocity);
@@ -117,6 +120,7 @@
 - (IBAction)handleForegroundTap:(UITapGestureRecognizer *)sender {
     if(self.isForegroundHidden){
         self.releaseVelocity = -5200.f;
+        self.distanceTraveled = -500.0f;
 //        self.pushBehavior.magnitude = 100;
         [self snapToBoundaries];
         [self.animator addBehavior:self.gravityBehavior];
@@ -130,13 +134,13 @@
     self.attachmentBehavior = nil;
 
     NSLog(@"- -- snap release %f", self.releaseVelocity);
-    if (self.releaseVelocity > 0 ) {
+    if (self.releaseVelocity > 200 || self.distanceTraveled > 100) {
         //dragging UP
         
         self.gravityBehavior.gravityDirection = CGVectorMake(0.0f, 1.0f);
         self.isForegroundHidden = YES;
         
-    } else {
+    } else if (self.releaseVelocity < -200 || self.distanceTraveled < -100 ){
         
         self.gravityBehavior.gravityDirection = CGVectorMake(0.0f, -1.0f);
         self.isForegroundHidden = NO;
@@ -147,7 +151,7 @@
 //  add back in the gravity
     [self.animator addBehavior:self.gravityBehavior];
     
-    self.pushBehavior.pushDirection = CGVectorMake( 0, self.releaseVelocity / 10.0f);
+    self.pushBehavior.pushDirection =  self.gravityBehavior.gravityDirection;
     self.pushBehavior.magnitude = abs(self.releaseVelocity) / 10.0f;
     self.pushBehavior.active = YES;
 }
