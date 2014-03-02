@@ -1,3 +1,5 @@
+
+
 //
 //  MainViewController.m
 //  papyrus
@@ -11,12 +13,20 @@
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *foregroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
+@property (weak, nonatomic) IBOutlet UIScrollView *cardScrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *cardView;
+
+
 
 @property (nonatomic) CGFloat initialYposition;
 @property (nonatomic) CGFloat releaseVelocity;
 @property (nonatomic) BOOL isForegroundHidden;
 
 - (IBAction)foregroundDidPan:(UIPanGestureRecognizer *)sender;
+
+- (IBAction)handleForegroundTap:(UITapGestureRecognizer *)sender;
+
 
 -(void)snapToBoundaries;
 
@@ -39,7 +49,13 @@
     self.isForegroundHidden = NO;
     self.initialYposition = 0;
     self.releaseVelocity = 0;
-    // Do any additional setup after loading the view from its nib.
+    
+    self.cardScrollView.contentInset = UIEdgeInsetsMake(0, -8, 0, -4);
+//    self.cardScrollView.contentSize = self.cardView.frame.size;
+    self.cardScrollView.contentSize = CGSizeMake(1605, 262);
+    
+    
+    NSLog(@"Content size: %@", NSStringFromCGSize(self.cardScrollView.contentSize) );
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,48 +65,73 @@
 }
 
 - (IBAction)foregroundDidPan:(UIPanGestureRecognizer *)sender {
+    
     NSLog(@"Foreground did pan");
     if (sender.state == UIGestureRecognizerStateBegan) {
-        self.initialYposition = self.foregroundView.frame.origin.y;
+        self.initialYposition = self.mainView.frame.origin.y;
         
     } else if (sender.state == UIGestureRecognizerStateChanged) {
-        CGRect newFrame = self.foregroundView.frame;
-        NSLog(@"translation in view: %f", [sender translationInView:self.view].y);
+        CGRect newFrame = self.mainView.frame;
+//        NSLog(@"translation in view: %f", [sender translationInView:self.view].y);
+        
         newFrame.origin.y = self.initialYposition + [sender translationInView:self.view].y;
-        self.foregroundView.frame=newFrame;
+        NSLog(@"NEW Y position in view: %f",  newFrame.origin.y);
+        
+        self.releaseVelocity = [sender velocityInView:self.view].y;
+
+        if(newFrame.origin.y < 0) {
+            newFrame.origin.y = newFrame.origin.y / 4;
+            self.releaseVelocity = self.releaseVelocity / 4;
+        }
+        
+        self.mainView.frame=newFrame;
         
     } else if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"Release velocity: %f ", self.releaseVelocity);
 
         [self snapToBoundaries];
     }
-    self.releaseVelocity = [sender velocityInView:self.view].y;
 
 }
 
+- (IBAction)handleForegroundTap:(UITapGestureRecognizer *)sender {
+    
+    if (self.isForegroundHidden ){
+        
+        //pretend like I just quickly swiped up:
+        self.releaseVelocity = -2000;
+        [self snapToBoundaries];
+    }
+}
+
 - (void) snapToBoundaries {
-    CGRect currentFrame = self.foregroundView.frame;
+    CGRect currentFrame = self.mainView.frame;
     CGRect newFrame =currentFrame;
     CGFloat distanceRemaining;
     if (self.releaseVelocity > 0) {
-        //dragging UP
+        NSLog(@"Release Velocity > 0");
         
         newFrame.origin.y = 528;
         distanceRemaining =  528 - currentFrame.origin.y;
         self.isForegroundHidden = YES;
         
     } else {
-        
+
         newFrame.origin.y = 0;
+
         distanceRemaining =  currentFrame.origin.y;
         self.isForegroundHidden = NO;
 
     }
-    CGFloat duration = distanceRemaining * (1.1/528);
-    CGFloat springVelocity = abs(self.releaseVelocity) / 1000;
     
-    [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1 initialSpringVelocity:springVelocity options:0 animations:^{
-        self.foregroundView.frame = newFrame;
+
+    CGFloat springVelocity = abs(self.releaseVelocity) / 500;
+    CGFloat duration = MAX(abs(distanceRemaining) * (1.2/528), .35);
+//    CGFloat duration = .35;
+
+
+    
+    [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:springVelocity options:0 animations:^{
+        self.mainView.frame = newFrame;
     } completion:nil];
     
     

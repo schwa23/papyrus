@@ -21,6 +21,7 @@
 		331154EA18BDC33500828136 /* papyrusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 331154E918BDC33500828136 /* papyrusTests.m */; };
 		331154F618BDC4B700828136 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331154F418BDC4B700828136 /* MainViewController.m */; };
 		331154F718BDC4B700828136 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 331154F518BDC4B700828136 /* MainViewController.xib */; };
+		33E6023418C2FA7200B0BDCD /* paper_strip.png in Resources */ = {isa = PBXBuildFile; fileRef = 33E6023318C2FA7200B0BDCD /* paper_strip.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		331154F318BDC4B600828136 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		331154F418BDC4B700828136 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		331154F518BDC4B700828136 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		33E6023318C2FA7200B0BDCD /* paper_strip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_strip.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		331154CA18BDC33500828136 /* papyrus */ = {
 			isa = PBXGroup;
 			children = (
+				33E6023318C2FA7200B0BDCD /* paper_strip.png */,
 				331154D318BDC33500828136 /* AppDelegate.h */,
 				331154D418BDC33500828136 /* AppDelegate.m */,
 				331154D618BDC33500828136 /* Images.xcassets */,
@@ -230,6 +233,7 @@
 				331154CF18BDC33500828136 /* InfoPlist.strings in Resources */,
 				331154F718BDC4B700828136 /* MainViewController.xib in Resources */,
 				331154D718BDC33500828136 /* Images.xcassets in Resources */,
+				33E6023418C2FA7200B0BDCD /* paper_strip.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +455,7 @@
 				331154EF18BDC33500828136 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		331154F018BDC33500828136 /* Build configuration list for PBXNativeTarget "papyrusTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +464,7 @@
 				331154F218BDC33500828136 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -7,7 +7,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
                 <outlet property="backgroundView" destination="Qi8-bI-onR" id="iOp-xg-Nvq"/>
+                <outlet property="cardScrollView" destination="lT0-dp-Z9x" id="EFD-cg-D3s"/>
+                <outlet property="cardView" destination="8m6-EG-lOD" id="0np-Vw-hvw"/>
                 <outlet property="foregroundView" destination="4Ck-Gx-nZj" id="SK7-L8-nSG"/>
+                <outlet property="mainView" destination="9aC-hK-0g5" id="kHT-Oj-AEa"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -16,18 +19,36 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="papyrus_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Qi8-bI-onR">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papyrus_bg" id="Qi8-bI-onR">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
-                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="papyrus_foreground" translatesAutoresizingMaskIntoConstraints="NO" id="4Ck-Gx-nZj">
+                <view contentMode="scaleToFill" id="9aC-hK-0g5">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <gestureRecognizers/>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="61f-vz-hJM" appends="YES" id="Txn-o0-MBz"/>
-                    </connections>
-                </imageView>
+                    <subviews>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papyrus_midground" id="4Ck-Gx-nZj">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="61f-vz-hJM" appends="YES" id="Txn-o0-MBz"/>
+                                <outletCollection property="gestureRecognizers" destination="O4q-V2-Wt1" appends="YES" id="5Io-6q-dTo"/>
+                            </connections>
+                        </imageView>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" id="lT0-dp-Z9x">
+                            <rect key="frame" x="0.0" y="306" width="320" height="262"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <imageView contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papyrus_strip" id="8m6-EG-lOD">
+                                    <rect key="frame" x="0.0" y="0.0" width="1605" height="262"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                            </subviews>
+                        </scrollView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -38,9 +59,15 @@
                 <action selector="foregroundDidPan:" destination="-1" id="j7v-A2-yAn"/>
             </connections>
         </panGestureRecognizer>
+        <tapGestureRecognizer id="O4q-V2-Wt1">
+            <connections>
+                <action selector="handleForegroundTap:" destination="-1" id="F3h-1q-jJy"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="papyrus_bg" width="640" height="1136"/>
-        <image name="papyrus_foreground" width="640" height="1136"/>
+        <image name="papyrus_midground" width="320" height="568"/>
+        <image name="papyrus_strip" width="1605" height="262"/>
     </resources>
 </document>
