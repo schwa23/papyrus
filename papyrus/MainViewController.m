@@ -173,7 +173,6 @@
     
     cardFrame.size.width = 1605*scale;
     cardFrame.size.height = newFrame.size.height;
-//    cardFrame.origin.x = cardFrame.origin.x * scale;
     
 
     
