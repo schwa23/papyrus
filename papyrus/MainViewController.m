@@ -130,7 +130,7 @@
 
 
     
-    [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:springVelocity options:0 animations:^{
+    [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:springVelocity options:UIViewAnimationOptionAllowUserInteraction animations:^{
         self.mainView.frame = newFrame;
     } completion:nil];
     
