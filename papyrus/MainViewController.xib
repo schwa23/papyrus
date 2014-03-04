@@ -36,13 +36,14 @@
                                 <outletCollection property="gestureRecognizers" destination="O4q-V2-Wt1" appends="YES" id="5Io-6q-dTo"/>
                             </connections>
                         </imageView>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" id="lT0-dp-Z9x">
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" maximumZoomScale="2" bouncesZoom="NO" id="lT0-dp-Z9x">
                             <rect key="frame" x="0.0" y="306" width="320" height="262"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <subviews>
-                                <imageView contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papyrus_strip" id="8m6-EG-lOD">
+                                <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papyrus_strip" id="8m6-EG-lOD">
                                     <rect key="frame" x="0.0" y="0.0" width="1605" height="262"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    <gestureRecognizers/>
                                 </imageView>
                             </subviews>
                         </scrollView>
@@ -51,8 +52,12 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="8eA-bo-mhD" appends="YES" id="yYu-2b-962"/>
+            </connections>
         </view>
         <panGestureRecognizer minimumNumberOfTouches="1" id="61f-vz-hJM">
             <connections>
@@ -64,6 +69,11 @@
                 <action selector="handleForegroundTap:" destination="-1" id="F3h-1q-jJy"/>
             </connections>
         </tapGestureRecognizer>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="8eA-bo-mhD">
+            <connections>
+                <action selector="handleCardsPanGesture:" destination="-1" id="T56-ZN-fcU"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
     <resources>
         <image name="papyrus_bg" width="640" height="1136"/>
