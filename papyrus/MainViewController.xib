@@ -22,6 +22,10 @@
                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papyrus_bg" id="Qi8-bI-onR">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="LP8-fZ-vn3" appends="YES" id="Vtu-iZ-mNc"/>
+                    </connections>
                 </imageView>
                 <view contentMode="scaleToFill" id="9aC-hK-0g5">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -62,6 +66,11 @@
         <tapGestureRecognizer id="O4q-V2-Wt1">
             <connections>
                 <action selector="handleForegroundTap:" destination="-1" id="F3h-1q-jJy"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="LP8-fZ-vn3">
+            <connections>
+                <action selector="handleBackgroundTap:" destination="-1" id="ZUr-tq-Beq"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

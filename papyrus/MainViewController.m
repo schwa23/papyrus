@@ -9,6 +9,7 @@
 //
 
 #import "MainViewController.h"
+#import "SectionEditorViewController.h"
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *foregroundView;
@@ -23,12 +24,17 @@
 @property (nonatomic) CGFloat releaseVelocity;
 @property (nonatomic) BOOL isForegroundHidden;
 
+@property (nonatomic) BOOL shouldShowEditSection;
+
 - (IBAction)foregroundDidPan:(UIPanGestureRecognizer *)sender;
 
 - (IBAction)handleForegroundTap:(UITapGestureRecognizer *)sender;
 
+- (IBAction)handleBackgroundTap:(UITapGestureRecognizer *)sender;
 
 -(void)snapToBoundaries;
+
+- (void) showEditSections;
 
 @end
 
@@ -103,6 +109,24 @@
     }
 }
 
+- (void) showEditSections {
+    UIView *snapshotView = [self.mainView snapshotViewAfterScreenUpdates:YES];
+    
+    
+    SectionEditorViewController *sectionEditor = [[SectionEditorViewController alloc] initWithSnapshotView:snapshotView];
+    [self presentViewController:sectionEditor animated:NO completion:^{
+        //did present view
+    }];
+    
+}
+
+- (IBAction)handleBackgroundTap:(UITapGestureRecognizer *)sender {
+    self.shouldShowEditSection = YES;
+    self.releaseVelocity = -2000;
+    [self snapToBoundaries];
+    
+}
+
 - (void) snapToBoundaries {
     CGRect currentFrame = self.mainView.frame;
     CGRect newFrame =currentFrame;
@@ -132,7 +156,13 @@
     
     [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:springVelocity options:UIViewAnimationOptionAllowUserInteraction animations:^{
         self.mainView.frame = newFrame;
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        if(finished && self.shouldShowEditSection) {
+            [self showEditSections];
+            self.shouldShowEditSection = NO;
+
+        }
+    }];
     
     
 }

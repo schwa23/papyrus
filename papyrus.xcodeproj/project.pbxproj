@@ -21,6 +21,8 @@
 		331154EA18BDC33500828136 /* papyrusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 331154E918BDC33500828136 /* papyrusTests.m */; };
 		331154F618BDC4B700828136 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331154F418BDC4B700828136 /* MainViewController.m */; };
 		331154F718BDC4B700828136 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 331154F518BDC4B700828136 /* MainViewController.xib */; };
+		3375540E18C8468A00C0C6F5 /* SectionEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3375540C18C8468A00C0C6F5 /* SectionEditorViewController.m */; };
+		3375540F18C8468A00C0C6F5 /* SectionEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3375540D18C8468A00C0C6F5 /* SectionEditorViewController.xib */; };
 		33E6023418C2FA7200B0BDCD /* paper_strip.png in Resources */ = {isa = PBXBuildFile; fileRef = 33E6023318C2FA7200B0BDCD /* paper_strip.png */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +56,9 @@
 		331154F318BDC4B600828136 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		331154F418BDC4B700828136 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		331154F518BDC4B700828136 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		3375540B18C8468A00C0C6F5 /* SectionEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionEditorViewController.h; sourceTree = "<group>"; };
+		3375540C18C8468A00C0C6F5 /* SectionEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionEditorViewController.m; sourceTree = "<group>"; };
+		3375540D18C8468A00C0C6F5 /* SectionEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionEditorViewController.xib; sourceTree = "<group>"; };
 		33E6023318C2FA7200B0BDCD /* paper_strip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_strip.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +127,9 @@
 				331154F318BDC4B600828136 /* MainViewController.h */,
 				331154F418BDC4B700828136 /* MainViewController.m */,
 				331154F518BDC4B700828136 /* MainViewController.xib */,
+				3375540B18C8468A00C0C6F5 /* SectionEditorViewController.h */,
+				3375540C18C8468A00C0C6F5 /* SectionEditorViewController.m */,
+				3375540D18C8468A00C0C6F5 /* SectionEditorViewController.xib */,
 			);
 			path = papyrus;
 			sourceTree = "<group>";
@@ -230,6 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3375540F18C8468A00C0C6F5 /* SectionEditorViewController.xib in Resources */,
 				331154CF18BDC33500828136 /* InfoPlist.strings in Resources */,
 				331154F718BDC4B700828136 /* MainViewController.xib in Resources */,
 				331154D718BDC33500828136 /* Images.xcassets in Resources */,
@@ -255,6 +264,7 @@
 				331154D518BDC33500828136 /* AppDelegate.m in Sources */,
 				331154F618BDC4B700828136 /* MainViewController.m in Sources */,
 				331154D118BDC33500828136 /* main.m in Sources */,
+				3375540E18C8468A00C0C6F5 /* SectionEditorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
