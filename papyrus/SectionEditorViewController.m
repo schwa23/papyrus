@@ -141,7 +141,10 @@ static int kViewIsInTop = 0;
                 newFrame.origin.x -= (newFrame.size.width + 10) * (i + 1);
                 [UIView animateWithDuration:.2 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:1.0 options:0 animations:^{
                     view.frame = newFrame;
-                } completion:nil];
+                } completion:^(BOOL finished) {
+                    [self startWiggleAnimationOnView:view];
+
+                }];
                 
                 
             }
@@ -181,7 +184,9 @@ static int kViewIsInTop = 0;
                 dragView.transform = CGAffineTransformMakeScale(1, 1);
                 dragView.tag = dragView.tag == kViewIsInBottom? kViewIsInTop: kViewIsInBottom;
             } completion:^(BOOL finished) {
-                [self startWiggleAnimationOnView:dragView];
+                if(dragView.tag == kViewIsInTop){
+                    [self startWiggleAnimationOnView:dragView];
+                }
             }];
             
 
@@ -212,7 +217,9 @@ static int kViewIsInTop = 0;
                 newFrame.size.width = 130;
                 [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:.5 options:0 animations:^{
                     view.frame = newFrame;
-                } completion:nil];
+                } completion:^(BOOL finished){
+                    [self startWiggleAnimationOnView:view];
+                }];
                 
                 
             }
@@ -223,8 +230,8 @@ static int kViewIsInTop = 0;
 
 -(void) startWiggleAnimationOnView:(UIView *)view {
     NSLog(@"wiggling commence!");
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
-        self.snapshot.transform = CGAffineTransformMakeRotation(5 * M_1_PI/ 180);
+    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowUserInteraction| UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+        view.transform = CGAffineTransformMakeRotation(5 * M_1_PI/ 180);
     } completion:^(BOOL finished) {
         //do something
     }];
